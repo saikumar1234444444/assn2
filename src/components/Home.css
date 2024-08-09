@@ -32,18 +32,17 @@
   margin:auto;
 }
 .heading{
-  font-size: 20px;
+  font-size: clamp(14px,2vw,18px);
 }
 .description{
-  font-size: 15px;
+  font-size: clamp(12px,2vw,14px);
 }
 .div{
   width:100%;
   box-shadow:0 0 6px lightgray;
   border-radius: 10px;
-  padding:15px;
   box-sizing: border-box;
-  min-height:520px;
+  min-height:530px;
 }
 .inputFilter{
   display:flex;
@@ -59,14 +58,18 @@
   box-shadow: 0 0 3px grey;
   padding:5px;
   border-radius: 4px;
+  font-size: clamp(10px,2vw,14px);
 }
 .btnContainer{
   display:flex;
   flex-direction: row;
   justify-content:space-between;
   align-items:center;
-  width:85%;
+  width:100%;
   margin-top:auto;
+  box-shadow:0 -6px 4px -4px grey;
+  padding:10px;
+  box-sizing: border-box;
 }
 .filterText{
   font-size:20px;
@@ -78,4 +81,37 @@
   font-weight: 400;
   line-height: 2px;
   margin-top: 20px;
+}
+
+.applyButton{
+  background-color: #A05C38;
+  color:#FFFFFF;
+  width:80px;
+  padding-top:6px; 
+  padding-bottom:6px;
+  border-radius: 5px;
+  border:none;
+  cursor:pointer;
+}
+.imgDiv{
+  width:100%;
+  background-color: lightslategrey;
+ border-top-left-radius: 10px;
+ border-top-right-radius: 10px;
+  box-sizing: border-box;
+  position: relative;
+
+
+}
+.imgLight{
+  width:100%;
+  background-color: lightpink;
+ border-top-left-radius: 10px;
+ border-top-right-radius: 10px;
+  box-sizing: border-box;
+  position: relative;
+}
+
+.textDiv{
+  padding:10px;
 }

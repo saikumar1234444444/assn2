@@ -5,22 +5,26 @@ import InputAdornment from "@mui/material/InputAdornment";
 import SearchIcon from "@mui/icons-material/Search";
 import TuneIcon from "@mui/icons-material/Tune";
 import Grid from "@mui/material/Grid";
-import one from "../components/assets/one.jpeg";
-import two from "../components/assets/two.jpeg";
-import three from "../components/assets/three.jpeg";
-import four from "../components/assets/four.jpeg";
-import five from "../components/assets/five.jpeg";
-import six from "../components/assets/six.jpeg";
-import seven from "../components/assets/seven.jpeg";
-import eight from "../components/assets/eight.jpeg";
-import nine from "../components/assets/nine.jpeg";
-import ten from "../components/assets/ten.jpeg";
+import one from "../components/assets/one.png";
+import two from "../components/assets/two.png";
+import three from "../components/assets/three.png";
+import four from "../components/assets/four.png";
+import five from "../components/assets/five.png";
+import six from "../components/assets/six.png";
+import seven from "../components/assets/seven.png";
+import eight from "../components/assets/eight.png";
+import nine from "../components/assets/nine.png";
+import ten from "../components/assets/ten.png";
 import SwipeableDrawer from "@mui/material/SwipeableDrawer";
 import Slider from "@mui/material/Slider";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
-import Box from '@mui/material/Box';
-
+import Box from "@mui/material/Box";
+import DashboardIcon from "@mui/icons-material/Dashboard";
+import MenuIcon from "@mui/icons-material/Menu";
+import Avatar from "@mui/material/Avatar";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 
 const idolsArray = [
   {
@@ -32,36 +36,40 @@ const idolsArray = [
     image: one,
     region: "banglore",
     material: "stone",
+    likes: 1,
   },
   {
     id: 2,
     title: "Naga Muchalinda",
     description:
-      "The Vinaya Pitaka, during the forty-nine days of contemplation by Buddha before he attained enlightenment. In the third...",
+      "The Vinaya Pitaka, during the forty-nine days of contemplation by Buddha before he attained enlightenment.",
     time: 200,
     image: two,
     region: "hyderabad",
     material: "stone",
+    likes: 1,
   },
   {
     id: 3,
     title: "Naga Muchalinda",
     description:
-      "The Vinaya Pitaka, during the forty-nine days of contemplation by Buddha before he attained enlightenment. In the third...",
+      "The Vinaya Pitaka, during the forty-nine days of contemplation by Buddha before he attained enlightenment. ",
     time: 300,
     image: three,
     region: "hyderabad",
     material: "copper",
+    likes: 4,
   },
   {
     id: 4,
     title: "Naga Muchalinda",
     description:
-      "The Vinaya Pitaka, during the forty-nine days of contemplation by Buddha before he attained enlightenment. In the third...",
+      "The Vinaya Pitaka, during the forty-nine days of contemplation by Buddha before he attained enlightenment. ",
     time: 400,
     image: four,
     region: "mumbai",
     material: "copper",
+    likes: 4,
   },
   {
     id: 5,
@@ -72,6 +80,7 @@ const idolsArray = [
     image: five,
     region: "banglore",
     material: "stone",
+    likes: 1,
   },
   {
     id: 6,
@@ -82,6 +91,7 @@ const idolsArray = [
     image: six,
     region: "banglore",
     material: "gold",
+    likes: 3,
   },
   {
     id: 7,
@@ -92,16 +102,18 @@ const idolsArray = [
     image: seven,
     region: "banglore",
     material: "gold",
+    likes: 3,
   },
   {
     id: 8,
     title: "Lakshmi",
     description:
-      "Goddess Lakshmi or Mahalakshmi is the consort of Vishnu. She is the resplendent goddess of wealth and prosperity who...",
+      "Goddess Lakshmi or Mahalakshmi is the consort of Vishnu. She is the resplendent goddess of wealth and prosperity",
     time: 800,
     image: eight,
     region: "hyderabad",
     material: "copper",
+    likes: 3,
   },
   {
     id: 9,
@@ -112,6 +124,7 @@ const idolsArray = [
     image: nine,
     region: "hyderabad",
     material: "gold",
+    likes: 3,
   },
   {
     id: 10,
@@ -122,6 +135,7 @@ const idolsArray = [
     image: ten,
     region: "mumbai",
     material: "gold",
+    likes: 0,
   },
 ];
 
@@ -155,7 +169,6 @@ const Home = () => {
   const [value, setValue] = React.useState([0, 1400]);
   const [region, setRegion] = React.useState("All");
   const [material, setMaterial] = React.useState("All");
-  console.log(items,'res');
 
   const handleChangeCommitted = () => {
     beforeChange = null;
@@ -182,15 +195,11 @@ const Home = () => {
 
   const handleSearchItem = (event) => {
     setSearch(event.target.value);
-    if (event.target.value !== "") {
-      const result = items.filter((each) =>
-        each.title.toLowerCase().includes(search)
-      );
-      setItems(result);
-    } else {
-      setItems(idolsArray);
-    }
   };
+
+  let searchs = items.filter((each) =>
+    each.title.toLowerCase().includes(search)
+  );
 
   const toggleDrawewr = () => {
     setOpen(true);
@@ -205,63 +214,45 @@ const Home = () => {
   };
 
   const handleApplyFilter = () => {
-    
-    let result=items
-    if(material==='All' && region!=='All'){
-        console.log('one')
-         result= idolsArray.filter(
-            (each) =>
-              each.time > value[0] &&
-              each.time < value[1]
-               &&
-              each.region.toLowerCase() === region.toLowerCase()
-          )
-          
+    let result = searchs;
+    if (material === "All" && region !== "All") {
+      result = items.filter(
+        (each) =>
+          each.time > value[0] &&
+          each.time < value[1] &&
+          each.region.toLowerCase() === region.toLowerCase()
+      );
+    } else if (region === "All" && material !== "All") {
+      result = items.filter(
+        (each) =>
+          each.time > value[0] &&
+          each.time < value[1] &&
+          each.material.toLowerCase() === material.toLowerCase()
+      );
+    } else if (material === "All" && region === "All") {
+      result = items.filter(
+        (each) => each.time > value[0] && each.time < value[1]
+      );
+    } else {
+      result = items.filter(
+        (each) =>
+          each.time > value[0] &&
+          each.time < value[1] &&
+          each.material.toLowerCase() === material.toLowerCase() &&
+          each.region.toLowerCase() === region.toLowerCase()
+      );
     }
-    else if(region==='All' && material!=='All'){
-        console.log('two')
-         result= idolsArray.filter(
-            (each) =>
-              each.time > value[0] &&
-              each.time < value[1]
-               &&
-              each.material.toLowerCase() === material.toLowerCase()
-          )
-        
-    }
-    else if(material==='All'&& region==='All'){
-        console.log('three')
-         result=idolsArray.filter(
-            (each) =>
-              each.time > value[0] &&
-              each.time < value[1])  
-                  
-    }
-    else{
-        console.log('four')
-        
-         result = idolsArray.filter(
-            (each) =>
-              each.time > value[0] &&
-              each.time < value[1]
-               &&
-              each.material.toLowerCase() === material.toLowerCase()
-               &&
-              each.region.toLowerCase() === region.toLowerCase()
-          );
-          
-
-    }
-    setItems(result); 
-    
+    setItems(result);
+    setOpen(false);
   };
 
- const clearItems=()=>{
-    setValue([0,1400])
-    setRegion('All')
-    setMaterial('All')
-    setItems(idolsArray)
-  }
+  const clearItems = () => {
+    setValue([0, 1400]);
+    setRegion("All");
+    setMaterial("All");
+    setItems(idolsArray);
+    setOpen(false);
+  };
   return (
     <div className="bgContainer">
       <div className="searchBox">
@@ -283,6 +274,7 @@ const Home = () => {
               "& ::placeholder": {
                 color: "#A8A8A8",
                 fontFamily: "sans-serif",
+                fontSize: "clamp(12px,2vw,16px)",
               },
               "& .MuiOutlinedInput-root": {
                 borderRadius: "10px",
@@ -302,24 +294,57 @@ const Home = () => {
           />
           <div className="filterBox" onClick={toggleDrawewr}>
             <TuneIcon />
-            <p>FILTERS</p>
+            <p style={{ fontSize: "clamp(12px,2vw,16px" }}>FILTERS</p>
           </div>
         </div>
         <button className="button">SURPRISE ME</button>
       </div>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "flex-start",
+          width: "90%",
+          marginTop: "25px",
+          gap: "2px",
+        }}
+      >
+        <Avatar
+          style={{
+            borderRadius: "2px",
+            backgroundColor: "#F3F3F3",
+            border: "1px solid #D9D9D9",
+            height: "25px",
+            width: "25px",
+          }}
+        >
+          <MenuIcon style={{ color: "grey" }} />
+        </Avatar>
+        <Avatar
+          style={{
+            borderRadius: "2px",
+            backgroundColor: "#F3F3F3",
+            border: "1px solid #D9D9D9",
+            height: "25px",
+            width: "25px",
+          }}
+        >
+          <DashboardIcon style={{ color: "black" }} />
+        </Avatar>
+      </div>
+      {items.length === 0 && <h1>Search result not found</h1>}
       <Grid
         container
-        gap={5}
+        gap={3.4}
         sx={{
           display: "flex",
           flexDirection: "row",
-          justifyContent: "flex-start",
+          justifyContent: { xs: "center", sm: "flex-start", md: "flex-start" },
           alignItems: "center",
           width: "90%",
           marginTop: "30px",
         }}
       >
-        {items.map((each) => (
+        {searchs.map((each, index) => (
           <Grid
             item
             sx={{
@@ -328,89 +353,149 @@ const Home = () => {
               justifyContent: "center",
               flexGrow: 1,
             }}
-            xs={8}
-            sm={4}
-            md={4}
-            lg={2}
+            xs={9}
+            sm={5}
+            md={3}
+            lg={2.2}
           >
             <div className="div">
-              <img src={each.image} className="img" />
-              <h1 className="heading">{each.title}</h1>
-              <p xlassName="description">{each.description}</p>
-              <p>{each.time}</p>
+              <div className={each.id % 2 === 0 ? "imgDiv" : "imgLight"}>
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    position: "absolute",
+                    alignItems: "center",
+                    right: "10px",
+                  }}
+                >
+                  <FavoriteBorderIcon
+                    style={{ fontWeight: 200, fontSize: "medium" }}
+                  />
+                  <p style={{ fontSize: "14px" }}>{each.likes}</p>
+                  <VisibilityOutlinedIcon
+                    style={{
+                      marginLeft: "5px",
+                      fontWeight: 200,
+                      fontSize: "medium",
+                    }}
+                  />
+                </div>
+                <img src={each.image} className="img" />
+              </div>
+              <div className="textDiv">
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                  }}
+                >
+                  <h1 className="heading">{each.title}</h1>
+                  <p style={{ fontSize: "clamp(12px,2vw,16px" }}>
+                    {each.time} BC
+                  </p>
+                </div>
+                <p className="description">{each.description}</p>
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                  }}
+                >
+                  <p style={{ fontSize: "clamp(12px,2vw,16px" }}>
+                    {each.material}
+                  </p>
+                  <p style={{ fontSize: "clamp(12px,2vw,16px" }}>
+                    {each.region}
+                  </p>
+                </div>
+              </div>
             </div>
           </Grid>
         ))}
       </Grid>
       <SwipeableDrawer onClose={closeDrawer} open={open} anchor="right">
-        <Box
-          sx={{
-            backgroundColor: "white",
-            height: "100vh",
-            width:{xs:'300px',sm:'400px'},
-            padding: "20px",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "flex-start",
-          }}
-        >
-          <h1 className="filterText">Search by filter</h1>
-          <p className="filterLabel">select period</p>
-          <Box sx={{ width:{xs:'280px',sm:'300px'} }}>
-            <Slider
-              valueLabelDisplay="on"
-              min={0}
-              max={1400}
-              track="inverted"
-              aria-labelledby="track-inverted-range-slider"
-              getAriaValueText={valuetext}
-              marks={marks}
-              value={value}
-              onChange={handleChange}
-              onChangeCommitted={handleChangeCommitted}
-            />
+        <Box sx={{ height: "100vh", display: "flex", flexDirection: "column" }}>
+          <Box
+            sx={{
+              backgroundColor: "white",
+              width: { xs: "270px", sm: "400px" },
+              padding: "20px",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "flex-start",
+            }}
+          >
+            <h1 className="filterText">Search by filter</h1>
+            <p className="filterLabel">select period</p>
+            <Box
+              sx={{ width: { xs: "265px", sm: "300px" }, marginTop: "40px" }}
+            >
+              <Slider
+                valueLabelDisplay="on"
+                min={0}
+                max={1400}
+                track="inverted"
+                aria-labelledby="track-inverted-range-slider"
+                getAriaValueText={valuetext}
+                marks={marks}
+                value={value}
+                onChange={handleChange}
+                onChangeCommitted={handleChangeCommitted}
+              />
+            </Box>
+            <p className="filterLabel">select material</p>
+            <Select
+              sx={{
+                border: "none",
+                width: "90%",
+                "& .MuiOutlinedInput-notchedOutline": {
+                  border: "none",
+                },
+              }}
+              id="demo-simple-select-required"
+              value={material}
+              defaultValue={"All"}
+              onChange={handleChangeMaterial}
+            >
+              <MenuItem value="All">All</MenuItem>
+              <MenuItem value="copper">copper</MenuItem>
+              <MenuItem value="stone">stone</MenuItem>
+              <MenuItem value="gold">gold</MenuItem>
+            </Select>
+            <p className="filterLabel">select region</p>
+            <Select
+              sx={{
+                border: "none",
+                width: "90%",
+                "& .MuiOutlinedInput-notchedOutline": {
+                  border: "none",
+                },
+              }}
+              id="demo-simple-select-required"
+              value={region}
+              defaultValue={"All"}
+              onChange={handleChangeRegion}
+            >
+              <MenuItem value="All">All</MenuItem>
+              <MenuItem value="hyderabad">hyderabad</MenuItem>
+              <MenuItem value="banglore">banglore</MenuItem>
+              <MenuItem value="mumbai">mumbai</MenuItem>
+            </Select>
           </Box>
-          <p className="filterLabel">select material</p>
-          <Select
-            sx={{
-              border: "none",
-              width: "90%",
-              "& .MuiOutlinedInput-notchedOutline": {
-                border: "none",
-              },
-            }}
-            id="demo-simple-select-required"
-            value={material}
-            defaultValue={"All"}
-            onChange={handleChangeMaterial}
-          >
-            <MenuItem value="All">All</MenuItem>
-            <MenuItem value="copper">copper</MenuItem>
-            <MenuItem value="stone">stone</MenuItem>
-            <MenuItem value="gold">gold</MenuItem>
-          </Select>
-          <p className="filterLabel">select region</p>
-          <Select
-            sx={{
-              border: "none",
-              width: "90%",
-              "& .MuiOutlinedInput-notchedOutline": {
-                border: "none",
-              },
-            }}
-            id="demo-simple-select-required"
-            value={region}
-            defaultValue={"All"}
-            onChange={handleChangeRegion}
-          >
-            <MenuItem value="All">All</MenuItem>
-            <MenuItem value="hyderabad">hyderabad</MenuItem>
-            <MenuItem value="banglore">banglore</MenuItem>
-            <MenuItem value="mumbai">mumbai</MenuItem>
-          </Select>
           <div className="btnContainer">
-            <p onClick={clearItems} style={{cursor:'pointer'}}>clear all</p>
-            <button onClick={handleApplyFilter}>apply</button>
+            <p
+              onClick={clearItems}
+              style={{ cursor: "pointer", color: "#A05C38" }}
+            >
+              Clear All
+            </p>
+            <button className="applyButton" onClick={handleApplyFilter}>
+              apply
+            </button>
           </div>
         </Box>
       </SwipeableDrawer>
