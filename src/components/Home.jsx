@@ -198,7 +198,7 @@ const Home = () => {
   };
 
   let searchs = items.filter((each) =>
-    each.title.toLowerCase().includes(search)
+    each.title.toLowerCase().includes(search.toLocaleLowerCase())
   );
 
   const toggleDrawewr = () => {

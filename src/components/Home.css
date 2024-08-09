@@ -115,3 +115,9 @@
 .textDiv{
   padding:10px;
 }
+
+@media (max-width: 600px) {
+  .div{
+    min-height:430px;
+  }
+}
