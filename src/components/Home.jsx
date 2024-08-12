@@ -216,25 +216,25 @@ const Home = () => {
   const handleApplyFilter = () => {
     let result = searchs;
     if (material === "All" && region !== "All") {
-      result = items.filter(
+      result = idolsArray.filter(
         (each) =>
           each.time > value[0] &&
           each.time < value[1] &&
           each.region.toLowerCase() === region.toLowerCase()
       );
     } else if (region === "All" && material !== "All") {
-      result = items.filter(
+      result = idolsArray.filter(
         (each) =>
           each.time > value[0] &&
           each.time < value[1] &&
           each.material.toLowerCase() === material.toLowerCase()
       );
     } else if (material === "All" && region === "All") {
-      result = items.filter(
+      result = idolsArray.filter(
         (each) => each.time > value[0] && each.time < value[1]
       );
     } else {
-      result = items.filter(
+      result = idolsArray.filter(
         (each) =>
           each.time > value[0] &&
           each.time < value[1] &&
